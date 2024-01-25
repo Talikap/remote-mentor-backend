@@ -1,65 +1,60 @@
-const CodeBlock = require('../models/codeblockModel')
-const mongoose = require('mongoose')
 
-//get all codeblocks
+const CodeBlock = require('../models/codeblockModel');
+const mongoose = require('mongoose');
+
+// Get all codeblocks
 const getCodeBlocks = async (req, res) => {
-    //console.log('Endpoint accessed at:', new Date());
-    const codeBlocks = await CodeBlock.find({}).sort({createdAt: -1})
-    //console.log('Retrieved code blocks:', codeBlocks);
-    res.status(200).json(codeBlocks)
-}
+    // Retrieve all codeblocks from the database, sorted by creation date
+    const codeBlocks = await CodeBlock.find({}).sort({ createdAt: -1 });
+    // Respond with the retrieved codeblocks
+    res.status(200).json(codeBlocks);
+};
 
-//get a single codeblock
+// Get a single codeblock by ID
 const getCodeBlock = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such codeblock'})
+    // Check if the provided ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such codeblock' });
     }
 
-    const codeBlock = await CodeBlock.findById(id)
+    // Find the codeblock by ID
+    const codeBlock = await CodeBlock.findById(id);
 
-    if(!codeBlock) {
-        return res.status(404).json({error: 'No such codeblock'})
+    // Check if the codeblock exists
+    if (!codeBlock) {
+        return res.status(404).json({ error: 'No such codeblock' });
     }
 
-    res.status(200).json(codeBlock)
-}
+    // Respond with the retrieved codeblock
+    res.status(200).json(codeBlock);
+};
 
-//create new codeblock
-const createCodeBlock = async (req, res) => {
-    const {title, code} = req.body
-    // add doc to db
-    try{
-        const codeBlocks = await CodeBlock.create({title, code})
-        res.status(200).json(codeBlocks)
-    }catch (error){
-        res.status(400).json({error: error.message})
-    }
-}
-
-//update a codeblock
+// Update a codeblock by ID
 const updateCodeBlock = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such codeblock'})
+    // Check if the provided ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such codeblock' });
     }
 
-    const codeBlocks = await CodeBlock.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
+    // Find and update the codeblock by ID with the provided data
+    const codeBlock = await CodeBlock.findOneAndUpdate({ _id: id }, { ...req.body });
 
-    if(!codeBlocks) {
-        return res.status(404).json({error: 'No such codeblock'})
+    // Check if the codeblock exists
+    if (!codeBlock) {
+        return res.status(404).json({ error: 'No such codeblock' });
     }
 
-    res.status(200).json
-}
+    // Respond with a success status
+    res.status(200).json();
+};
 
+// Export the functions to be used in other modules
 module.exports = {
     getCodeBlock,
     getCodeBlocks,
-    createCodeBlock,
-    updateCodeBlock
-}
+    updateCodeBlock,
+};

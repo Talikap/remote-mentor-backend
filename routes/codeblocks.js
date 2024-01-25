@@ -2,7 +2,6 @@ const express = require('express')
 const {
     getCodeBlocks,
     getCodeBlock,
-    createCodeBlock,
     updateCodeBlock,
 } = require('../controllers/codeblockController')
 
@@ -13,9 +12,6 @@ router.get('/', getCodeBlocks)
 
 //GET a single codeblock
 router.get('/:id', getCodeBlock)
-
-//POST a new codeblock
-router.post('/', createCodeBlock)
 
 //UPDATE a codeblock
 router.patch('/:id', updateCodeBlock)
