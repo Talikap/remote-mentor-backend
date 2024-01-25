@@ -64,20 +64,20 @@ mongoose.connect(process.env.MONGO_URI)
 
         //integrate socket handelling
         socketHandler(server)
-      /*
+      
         //listen for requests
         const port = process.env.PORT || 4000
         server.listen(port,"0.0.0.0", () =>{
         console.log(`connected to db & listening on port ${port}`) 
         })  
-        */
+        
        
     })
     .catch((error) => {
         console.log(error)
     })
-
+/*
   const port = process.env.PORT || 4000
   app.listen(port,"0.0.0.0", () =>{
     console.log(`listening on port ${port}`) 
-})
+})*/
